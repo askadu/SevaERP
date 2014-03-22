@@ -280,7 +280,7 @@ public class Enquiry extends Frame implements ActionListener, EventListener {
         data[15] = txtVariant.getText();
         data[16] = txtColor.getText();
         
-        model.insert(data);
+        model.addEnquiry(data);
     }
 
 }

@@ -98,5 +98,8 @@ public class Start extends Frame implements ActionListener,EventListener{
             Enquiry enqNew = new Enquiry();
         }
     }
-
+    
+    public static void main(String[] args) {
+        Start obj = new Start();
+    }
 }

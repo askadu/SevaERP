@@ -291,4 +291,5 @@ public class Booking extends Frame implements ActionListener {
             txtFname.setText(" ");
         }
     }
+    public void insert ( )
 }
