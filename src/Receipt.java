@@ -9,20 +9,13 @@ import java.awt.TextArea;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.EventListener;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
-/**
- *
- * @author NIKESH
- */
 public class Receipt extends Frame  implements ActionListener, EventListener {
     Label lblReceiptDetails, lblCustomerId, lblReceiptNo, lblReceiptDate;
     TextField txtCustomerId, txtReceiptNo, txtReceiptDate;
@@ -46,30 +39,30 @@ public class Receipt extends Frame  implements ActionListener, EventListener {
      setLocation(100, 100); 
      
         lblReceiptDetails = new Label("Receipt Details");  
-        lblReceiptDetails.setBackground(Color.green); 
-        lblReceiptDetails.setBounds(0, 0, 0, 0);
+        lblReceiptDetails.setBackground(Color.red); 
+        lblReceiptDetails.setBounds(10, 40, 600, 20);
         add(lblReceiptDetails); 
         
         
         lblCustomerId = new Label("Customer ID ");
-        lblCustomerId.setBounds(0, 0, 0, 0);
+        lblCustomerId.setBounds(10, 120, 100, 20);
         add(lblCustomerId);
         
         txtCustomerId = new TextField();
-        txtCustomerId.setBounds(0, 0, 0, 0);
+        txtCustomerId.setBounds(130, 120, 120, 20);
         add(txtCustomerId);
         
         lblReceiptNo = new Label("Receipt No");
-        lblReceiptNo.setBounds(0, 0, 0, 0);
+        lblReceiptNo.setBounds(10, 80, 100, 20);
         add(lblReceiptNo);
         
         txtReceiptNo = new TextField();
-        txtReceiptNo.setBounds(0, 0, 0,0 );
+        txtReceiptNo.setBounds(130, 80, 120, 20);
         add(txtReceiptNo);
         
        
         lblReceiptDate = new Label("Receipt Date ");
-        lblReceiptDate.setBounds(0, 0, 0, 0);
+        lblReceiptDate.setBounds(300, 80, 80, 20);
         add(lblReceiptDate);
         
         Calendar currentDate = Calendar.getInstance();
@@ -78,49 +71,61 @@ public class Receipt extends Frame  implements ActionListener, EventListener {
         String dateNow = formatter.format(currentDate.getTime());
         
         txtReceiptDate = new TextField(dateNow);
-        txtReceiptDate.setBounds(0, 0, 0, 0);
+        txtReceiptDate.setBounds(400, 80, 100, 20);
         add(txtReceiptDate);
         txtReceiptDate.enable(false);
 
         lblName = new Label("Customer Name");
-        lblName.setBounds(0, 0, 0, 0);
+        lblName.setBounds(10, 160, 100, 20);
         add(lblName);
         
+        txtName = new TextField();
+        txtName.setBounds(130, 160, 200, 20);
+        add(txtName);
         
         lblAddress = new Label("Address");
-        lblAddress.setBounds(0, 0, 0, 0);
+        lblAddress.setBounds(10, 200, 100, 20);
         add(lblAddress);
         
         txtAreaAddress = new TextArea(4, 4);
-        txtAreaAddress.setBounds(0, 0, 0, 0);
+        txtAreaAddress.setBounds(130, 200, 400, 50);
         add(txtAreaAddress);
         
+        
         lblMobile = new Label("Mobile");
-        lblMobile.setBounds(0, 0, 0, 0);
+        lblMobile.setBounds(10, 270, 100, 20);
         add(lblMobile);
         
         txtMobile = new TextField();
-        txtMobile.setBounds(0, 0, 0, 0);
+        txtMobile.setBounds(130, 270, 100, 20);
         add(txtMobile);
         
         lblModel = new Label("Model");
-        lblModel.setBounds(0, 0, 0, 0);
+        lblModel.setBounds(10, 310, 100, 20);
         add(lblModel);
         
         txtModel = new TextField();
-        txtModel.setBounds(0, 0, 0, 0);
+        txtModel.setBounds(130, 310, 100, 20);
         add(txtModel);
+        
+        lblColor = new Label("Color");
+        lblColor.setBounds(300, 310, 100, 20);
+        add(lblColor);
+        
+        txtColor = new TextField();
+        txtColor.setBounds(400, 310, 100, 20);
+        add(txtColor);
         
         lblPaymentDetailsSep = new Label("Payment Details");
         lblPaymentDetailsSep.setBackground(Color.red);
-        lblPaymentDetailsSep.setBounds(0, 0, 0, 0);
+        lblPaymentDetailsSep.setBounds(10, 350, 600, 20);
         add(lblPaymentDetailsSep);
         
         lblModeOfPayment = new Label("Mode Of Payment");
-        lblModeOfPayment.setBounds(0, 0, 0, 0);
+        lblModeOfPayment.setBounds(10, 380, 100, 20);
         add(lblModeOfPayment);
         chModeOfPayment = new Choice();
-        chModeOfPayment.setBounds(0, 0, 0, 0);
+        chModeOfPayment.setBounds(130, 380, 200, 20);
         chModeOfPayment.add("Cash");
         chModeOfPayment.add("Personal Chq.");
         chModeOfPayment.add("Bankers Chq.");
@@ -129,55 +134,64 @@ public class Receipt extends Frame  implements ActionListener, EventListener {
         add(chModeOfPayment);
         
         lblChqNo = new Label("Cheque/DD No");
-        lblChqNo.setBounds(0, 0, 0, 0);
+        lblChqNo.setBounds(10, 420, 100, 20);
         add(lblChqNo);
         
         txtChqNo = new TextField();
-        txtChqNo.setBounds(0, 0, 0, 0);
+        txtChqNo.setBounds(130, 420, 80, 20);
         add(txtChqNo);
         
         lblHp = new Label("H.P.");
-        lblHp.setBounds(0, 0, 0, 0);
+        lblHp.setBounds(10, 460, 50, 20);
         add(lblHp);
         
         txtHp = new TextField();
-        txtHp.setBounds(0, 0, 0, 0);
+        txtHp.setBounds(130, 460, 200, 20);
         add(txtHp);
         
-        lblReceiptAmount = new Label("Cheque/DD No");
-        lblReceiptAmount.setBounds(0, 0, 0, 0);
+        lblReceiptAmount = new Label("Receipt Amount");
+        lblReceiptAmount.setBounds(10, 500, 100, 20);
         add(lblReceiptAmount);
         
         txtReceiptAmount = new TextField();
-        txtReceiptAmount.setBounds(0, 0, 0, 0);
+        txtReceiptAmount.setBounds(130, 500, 80, 20);
         add(txtReceiptAmount);
         
         btnSave = new Button("Save");
-        btnSave.setBounds(0, 0, 0, 0 );
+        btnSave.setBounds(120, 540 ,90, 30);
         add(btnSave);
         btnSave.addActionListener(this);
         
         btnClear = new Button("Clear");
-        btnClear.setBounds(0, 0, 0, 0);
+        btnClear.setBounds(260, 540, 90, 30);
         add(btnClear);
         btnClear.addActionListener(this);
         
         btnExit = new Button("Exit");
-        btnExit.setBounds(0, 0, 0, 0);
+        btnExit.setBounds(400, 540, 90, 30);
         add(btnExit);
         btnExit.addActionListener(this);
         
         this.setVisible(true);
         this.setSize(600, 600);
+        
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent we) {
+                dispose();
+            }
+        });
      }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        if(e.getSource() == btnSave) {
+            System.out.println("Save button Clicked");
+            System.out.println(" ");
+        }
+        if(e.getSource() == btnExit){
+             dispose();
+        }
     }
-
-    
-
- 
-    
-}
+ }       

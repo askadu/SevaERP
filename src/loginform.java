@@ -19,7 +19,7 @@ class LoginForm extends Frame implements ActionListener {
     public LoginForm() {
         setLocation(100, 100);
         setBackground(Color.pink);
-        l1 = new Label("Enter your ID & Password");
+        l1 = new Label("Administrator Login");
         l1.setFont(new Font("Times New Roman", Font.BOLD, 25));
         l1.setForeground(Color.blue);
         l1.setBounds(80, 50, 430, 30);
@@ -87,7 +87,7 @@ class LoginForm extends Frame implements ActionListener {
         mt.addImage(img, 0);
         mt.addImage(img1, 0);
 
-    }//constructor
+    }
 
     public void actionPerformed(ActionEvent ae) {
            if (ae.getSource() == btnCancel) {
@@ -109,7 +109,7 @@ class LoginForm extends Frame implements ActionListener {
                     txtPassword.setText("");
                 }
             }
-    }//actionPerformed
+    }
 
     public void update(Graphics g) {
         paint(g);

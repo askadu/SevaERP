@@ -21,7 +21,7 @@ public class Start extends Frame implements ActionListener,EventListener{
     MenuBar menuBar;
     Menu menu;
     MenuItem menuItem1;
-    Button btnBooking,btnEnquiry;
+    Button btnBooking,btnEnquiry, btnReceipt;
     Choice ch1;
     Label lblMobile;
     TextField txtMobile;
@@ -56,12 +56,17 @@ public class Start extends Frame implements ActionListener,EventListener{
         add(btnEnquiry);
         
         btnBooking = new Button("Booking");
-        btnBooking.setBounds(500, 100, 150, 40);
+        btnBooking.setBounds(250, 300, 150, 40);
         add(btnBooking);
+        
+        btnReceipt = new Button("Receipt");
+        btnReceipt.setBounds(250, 500, 150, 40);
+        add(btnReceipt);
 
        
         btnBooking.addActionListener(this);
         btnEnquiry.addActionListener(this);
+        btnReceipt.addActionListener(this);
 
         menuItem1 = new MenuItem("Enquiry");
         menu.add(menuItem1);
@@ -94,12 +99,11 @@ public class Start extends Frame implements ActionListener,EventListener{
             Booking booking = new Booking();
         }else if(e.getSource() == btnEnquiry ){
             Enquiry enqNew = new Enquiry();
+        }else if(e.getSource() == btnReceipt ){
+            Receipt recNew = new Receipt();
         }else if(e.getSource()== menuItem1){
             Enquiry enqNew = new Enquiry();
         }
     }
-    
-    public static void main(String[] args) {
-        Start obj = new Start();
-    }
+
 }
