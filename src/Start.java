@@ -10,6 +10,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.EventListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author Akshay Kadu <akshay@rozainfotech.com>
@@ -30,7 +32,7 @@ public class Start extends Frame implements ActionListener,EventListener{
     Statement stmt;
     ResultSet rs;
     Image img;
-
+    String id;
     //Constructor
     public Start() {
         setTitle("Maruti Seva ERP");
@@ -98,12 +100,22 @@ public class Start extends Frame implements ActionListener,EventListener{
         if(e.getSource() == btnBooking){
             Booking booking = new Booking();
         }else if(e.getSource() == btnEnquiry ){
-            Enquiry enqNew = new Enquiry();
+            Model model = new Model();
+            try {
+                id = model.generateId();
+            } catch (SQLException ex) {
+                Logger.getLogger(Start.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            Enquiry enqNew = new Enquiry(id);
         }else if(e.getSource() == btnReceipt ){
             Receipt recNew = new Receipt();
         }else if(e.getSource()== menuItem1){
             Enquiry enqNew = new Enquiry();
         }
+    }
+    
+    public static void main(String[] args) {
+        Start s = new Start();
     }
 
 }

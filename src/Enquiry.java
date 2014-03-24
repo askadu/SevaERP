@@ -27,7 +27,7 @@ public class Enquiry extends Frame  implements ActionListener, EventListener {
     
     Button btnSave, btnClear, btnExit;
     
-    public Enquiry() {
+    public Enquiry(String id) {
         
         setTitle("Enquiry Form"); 
         this.setLayout(null);
@@ -43,8 +43,9 @@ public class Enquiry extends Frame  implements ActionListener, EventListener {
         lblCustomerId.setBounds(300, 70, 80, 20);
         add(lblCustomerId);
         
-        txtCustomerId = new TextField();
+        txtCustomerId = new TextField(id);
         txtCustomerId.setBounds(400, 70, 100, 20);
+        txtCustomerId.enable(false);
         add(txtCustomerId);
         
         lblEnquiryDate = new Label("Enquiry Date ");
@@ -221,6 +222,9 @@ public class Enquiry extends Frame  implements ActionListener, EventListener {
                 dispose();
             }
         });
+    }
+    public Enquiry(){
+        
     }
 
     @Override

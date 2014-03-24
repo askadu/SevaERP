@@ -10,34 +10,47 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.sql.Connection;
-import java.sql.Statement;
+import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.EventListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-
-public class Booking extends Frame implements ActionListener{
+public class Booking extends Frame implements ActionListener {
 
     Label lblBookingDetails, lblCustomerId, lblBookingDate;
     TextField txtCustomerId, txtBookingDate;
-
     Label lblCustomerInformationSep, lblTitle, lblFname, lblMname, lblLname, lblAddress, lblCity, lblState,
             lblDistrict, lblPin, lblEmail, lblPhone, lblMobile, lblPanNo, lblDob;
     TextField txtFname, txtMname, txtLname, txtCity, txtState, txtDistrict, txtPin, txtEmail,
             txtPhone, txtMobile, txtPanNo, txtDob;
     TextArea txtAreaAddress;
     Choice chTitle;
-
     Label lblModelDetailsSep, lblModel, lblColor, lblPrice, lblHp, lblBookingPerson;
     TextField txtPrice, txtHp;
     Choice chModel;
     Choice chColor;
     Choice chBookingPerson;
+    Button btnSave, btnClear, btnExit, btnLoad;
+    private final String url = "jdbc:mysql://localhost:3306/";
+    private final String dbName = "seva";
+    private final String driver = "com.mysql.jdbc.Driver";
+    private final String userName = "root";
+    private final String password = "";
+    private Statement st;
+    private Connection conn;
 
-    Button btnSave, btnClear, btnExit;
-    
     public Booking() {
+
+        try {
+            Class.forName(driver).newInstance();
+            conn = DriverManager.getConnection(url + dbName, userName, password);
+            st = conn.createStatement();
+        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         setTitle("Booking Form");
         this.setLayout(null);
         setLocation(100, 100);
@@ -54,13 +67,17 @@ public class Booking extends Frame implements ActionListener{
         txtCustomerId.setBounds(120, 70, 120, 20);
         add(txtCustomerId);
 
+        btnLoad = new Button("Load..");
+        btnLoad.setBounds(240, 70, 50, 20);
+        add(btnLoad);
+        btnLoad.addActionListener(this);
+
         lblBookingDate = new Label("Booking Date ");
         lblBookingDate.setBounds(300, 70, 80, 20);
         add(lblBookingDate);
 
         Calendar currentDate = Calendar.getInstance();
-        SimpleDateFormat formatter
-                = new SimpleDateFormat("dd-MM-yyyy ");
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy ");
         String dateNow = formatter.format(currentDate.getTime());
 
         txtBookingDate = new TextField(dateNow);
@@ -245,24 +262,25 @@ public class Booking extends Frame implements ActionListener{
         add(chBookingPerson);
 
         btnSave = new Button("Save");
-        btnSave.setBounds(120, 520,90, 30);
+        btnSave.setBounds(120, 520, 90, 30);
         add(btnSave);
         btnSave.addActionListener(this);
 
         btnClear = new Button("Clear");
         btnClear.setBounds(260, 520, 90, 30);
         add(btnClear);
-            btnClear.addActionListener(this);
+        btnClear.addActionListener(this);
 
         btnExit = new Button("Exit");
         btnExit.setBounds(400, 520, 90, 30);
         add(btnExit);
         btnExit.addActionListener(this);
-         this.setSize(600, 600);
-        this.setVisible(true); 
-        
-        
+        this.setSize(600, 600);
+        this.setVisible(true);
+
+
         this.addWindowListener(new WindowAdapter() {
+
             @Override
             public void windowClosing(WindowEvent we) {
                 dispose();
@@ -272,14 +290,61 @@ public class Booking extends Frame implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == btnSave) {
+        if (e.getSource() == btnSave) {
             System.out.println("Save button Clicked");
             System.out.println("FirstName: " + txtFname.getText());
+            addBooking();
         }
-        if(e.getSource() == btnExit){
-             dispose();
+        if (e.getSource() == btnExit) {
+            dispose();
+        }
+        if (e.getSource() == btnLoad) {
+            loadData(Integer.parseInt(txtCustomerId.getText()));
+        }
+    }
+
+    public void addBooking() {
+        System.out.println("addbooking");
+        int val = 0;
+        try {
+            val = st.executeUpdate("insert into booking(customer_id, pan_no, dob, model,"
+                    + "color, price, hp, booking_person) "
+                    + "VALUES('" + Integer.parseInt(txtCustomerId.getText()) + "',"
+                    + " '" + txtPanNo.getText() + "',"
+                    + "'" + txtDob.getText() + "',"
+                    + "'" + chModel.getSelectedItem() + "',"
+                    + "'" + chColor.getSelectedItem() + "',"
+                    + "'" + Double.parseDouble(txtPrice.getText()) + "',"
+                    + "'" + txtHp.getText() + "',"
+                    + "'" + chBookingPerson.getSelectedItem() + "')");
+        } catch (SQLException ex) {
+            Logger.getLogger(Booking.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (val == 1) {
+            System.out.print("Values are Successfully Inserted");
         }
     }
     
-    
+    public void loadData(int id) {
+        try {
+            String sql = "SELECT * FROM enquiry WHERE id = '"+id+"'";
+           ResultSet rs = st.executeQuery(sql);
+           //STEP 5: Extract data from result set
+           while (rs.next()) {
+               txtFname.setText(rs.getString("fname"));
+               txtMname.setText(rs.getString("mname"));
+               txtLname.setText(rs.getString("lname"));
+               txtAreaAddress.setText(rs.getString("address"));
+               txtCity.setText(rs.getString("city"));
+               txtDistrict.setText(rs.getString("district"));
+               txtState.setText(rs.getString("state"));
+               txtPanNo.setText(rs.getString("pin"));
+               txtEmail.setText(rs.getString("email"));
+               txtPhone.setText(rs.getString("phone"));
+               txtMobile.setText(rs.getString("mobile"));
+           }
+        } catch (SQLException ex) {
+            Logger.getLogger(Booking.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
